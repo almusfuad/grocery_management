@@ -13,6 +13,17 @@ def create_uom(request):
             uom_name = request.data['uom_name']
             uom = UOM.objects.create(uom_name=uom_name)
             return JsonResponse({'message': 'UOM created successfully'})
+
+@api_view(['GET'])
+def uom_list(request):
+      if request.method == 'GET':
+            uoms = UOM.objects.all()
+            uom_list = []
+            for uom in uoms:
+                  uom_list.append({
+                        'uom_name': uom.uom_name
+                  })
+            return JsonResponse({'uom_list': uom_list}, status=200, content_type='application/json')
       
 @api_view(['POST'])
 def add_product(request):
@@ -43,10 +54,13 @@ def show_all_product(request):
             return JsonResponse({'products': product_list}, status=200, content_type='application/json')
       
       
-@api_view(['DELETE'])
-def delete_product(request, product_id):
-      if request.method == 'DELETE':
+@api_view(['POST'])
+def delete_product(request):
+      if request.method == 'POST':
             try:
+                  product_id = request.POST.get('product_id')
+                  if not product_id:
+                        return JsonResponse({'message': 'Product ID is required'}, status=400, content_type='application/json')
                   product = Product.objects.get(id=product_id)
             except Product.DoesNotExist:
                   return JsonResponse({'message': 'Product does not exist'}, status=404, content_type='application/json')

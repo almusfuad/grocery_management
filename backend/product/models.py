@@ -16,12 +16,12 @@ class Product(models.Model):
             return f"{self.name}"
 
 class Order(models.Model):
-      customer_number = models.CharField(max_length=100)
+      customer_name = models.CharField(max_length=100)
       total = models.FloatField()
       datetime = models.DateTimeField(auto_now_add=True)
       
       def __str__(self) -> str:
-            return f"{self.datetime}-{self.customer_number}"
+            return f"{self.datetime}-{self.customer_name}"
       
 class Order_details(models.Model):
       order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
