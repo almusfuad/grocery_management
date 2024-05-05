@@ -4,3 +4,6 @@ venv/
 # ignore environment files
 .env
 
+# ignoring pycharm
+.idea
+
