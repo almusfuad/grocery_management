@@ -4,7 +4,7 @@ from .views import create_uom, add_product, show_all_product, delete_product, cr
 
 urlpatterns = [
     path('create_uom/', create_uom, name='create_uom'),
-    path('get_uom', uom_list, name='uom_list'),
+    path('get_uom/', uom_list, name='uom_list'),
     path('add_product/', add_product, name='add_product'),
     path('show_all_product/', show_all_product, name='show_all_product'),
     path('delete_product/', delete_product, name='delete_product'),
