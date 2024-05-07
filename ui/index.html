@@ -33,10 +33,24 @@
     <main>
         <div class="container my-5 py-3 px-5 bg-light rounded">
             <div class="row">
-                <div class="d-flex justify-content-between mb-3">
-                    <h1 class="font-weight-bold col-6">Sales Report</h1>
-                    <input type="text" class="form-control" placeholder="Search customer">
+                <h1 class="font-weight-bold text-center">Sales Report</h1>
+                <div class="d-flex justify-content-between my-3">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sort by Date
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="sortDropdown">
+                            <a class="dropdown-item" href="#">Past 24 hours</a>
+                            <a class="dropdown-item" href="#">Past 7 days</a>
+                            <a class="dropdown-item" href="#">Past 30 days</a>
+                            <a class="dropdown-item" href="#">Past 12 months</a>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="text" class="form-control" placeholder="Search product">
+                    </div>
                 </div>
+
                 <div>
                     <table class="w-100 table table-bordered">
                         <thead>
@@ -53,7 +67,6 @@
 
                     </table>
                 </div>
-                </>
             </div>
         </div>
     </main>
