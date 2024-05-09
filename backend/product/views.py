@@ -23,6 +23,7 @@ def uom_list(request):
         uom_list = []
         for uom in uoms:
             uom_list.append({
+                'uom_id': uom.id,
                 'uom_name': uom.uom_name
             })
         return JsonResponse({'uom_list': uom_list}, status=200, content_type='application/json')
@@ -37,22 +38,21 @@ def add_product(request):
 
         # Extract required fields from data
         name = data.get('name')
-        uom_name = data.get('uom_name')
+        uom_id = data.get('uom_id')
         price_per_unit = data.get('price_per_unit')
 
 
         print("Name:", name)
-        print("UOM Name:", uom_name)
+        print("uom_id:", uom_id)
         print("Price Per unit:", price_per_unit)
 
         try:
             price_per_unit = float(price_per_unit)
-            uom_instance = UOM.objects.get(uom_name=uom_name)
+            uom_instance = UOM.objects.get(id=int(uom_id))
         except UOM.DoesNotExist:
             return JsonResponse({'message': 'UOM does not exist'}, status=404, content_type='application/json')
         product = Product.objects.create(name=name, uom_id=uom_instance, price_per_unit=price_per_unit)
         return JsonResponse({'message': 'Product created successfully'}, status=200, content_type='application/json')
-
 
 @api_view(['GET'])
 def show_all_product(request):
@@ -61,6 +61,7 @@ def show_all_product(request):
         product_list = []
         for product in products:
             product_list.append({
+                "product_id": product.id,
                 'name': product.name,
                 'uom_id': product.uom_id.uom_name,
                 'price_per_unit': product.price_per_unit,
@@ -72,10 +73,10 @@ def show_all_product(request):
 def delete_product(request):
     if request.method == 'POST':
         try:
-            product_id = request.POST.get('product_id')
+            product_id = request.data.get('product_id')
             if not product_id:
                 return JsonResponse({'message': 'Product ID is required'}, status=400, content_type='application/json')
-            product = Product.objects.get(id=product_id)
+            product = Product.objects.get(id=int(product_id))
         except Product.DoesNotExist:
             return JsonResponse({'message': 'Product does not exist'}, status=404, content_type='application/json')
         product.delete()
